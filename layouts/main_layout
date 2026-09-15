@@ -1,0 +1,76 @@
+
+import dash_mantine_components as dmc
+from dash import dcc
+
+from layouts.tab_game_layout import game_layout
+from layouts.tab_upgrade_layout import upgrade_layout
+from layouts.tab_settings_layout import settings_layout
+from layouts.tab_misc_layout import misc_layout
+from layouts.login_user_layout import login_user_layout
+from layouts.register_user_layout import register_user_layout
+
+main_page_layout = [
+    dcc.Store(id='current-user', data=None),
+    dmc.Text(
+        "Welcome to Cheese Game", 
+        id='txt-title',
+        variant="gradient",
+        gradient={
+            "from": "blue", "to": "purple", "deg":180
+            },
+        style={"fontSize": 40, "text-align": "center"}
+        ),
+    dmc.Tabs(
+        id='tabs-main',
+        color="red",
+        value="first",
+        children=[
+            dmc.TabsList(
+                justify= "center",
+                children=[
+                    dmc.TabsTab("Game", value="first"),
+                    dmc.TabsTab("Upgrades", value="second", color="purple"),
+                    dmc.TabsTab("Settings", value="third", color="blue"),
+                    dmc.TabsTab("Keep this safe for me", value="fourth", color="green"),
+                    dmc.ActionIcon(
+                        children=[
+                            dmc.Avatar(
+                                id='avatar-player',
+                                src="",
+                                size="100%",
+                            ), 
+                        ],
+                        id='btn-avatar',
+                        ml="auto",
+                        variant="subtle",
+                        radius="xl",
+                        p=0,
+                    ),
+                    
+                ]),
+            dmc.TabsPanel(
+                dmc.Flex(game_layout,
+                    direction= "column",
+                    gap={"base": "sm", "sm": "lg"},
+                    justify="center",
+                    align="center",
+                ),
+                value="first",
+            ),
+            dmc.TabsPanel(
+                upgrade_layout,
+                value="second",
+            ),
+            dmc.TabsPanel(
+                settings_layout,
+                value="third",
+            ),
+            dmc.TabsPanel(
+                misc_layout,
+                value="fourth",
+            ),
+        ]
+    ),
+    login_user_layout,
+    register_user_layout,
+]
